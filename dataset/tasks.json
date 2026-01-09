@@ -1,434 +1,379 @@
 [
   {
     "task_id": "1",
-    "task_description": "Search for 'mug' from the header search bar and verify that search results contain the product 'Mug The Best is yet to come'.",
+    "task_description": "Navigate to the 'Clothes > Women' category and return only the name of the first product displayed by default position.",
     "task_type": "lookup",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Click the header search input.",
-      "Type 'mug' and press Enter.",
-      "Wait for the search results page to load."
-    ],
+    "start_url": "__PRESTASHOP__",
+    "steps": "3",
     "require_login": false,
     "eval": {
-      "eval_type": ["url_match", "dom_match"],
-      "url_match": {
-        "match_type": "contains",
-        "match_value": "search",
-        "description": "Ensure navigation to a search results page."
-      },
-      "dom_match": {
-        "url": "last",
-        "dom_extractor": "document.body.innerText",
-        "match_type": "contains",
-        "match_value": "Mug The best is yet to come",
-        "description": "Search results should mention the demo product 'Mug The best is yet to come'."
+      "eval_type": ["string_match"],
+      "string_match": {
+        "match_type": "exact",
+        "match_value": "Hummingbird printed t-shirt"
       }
     }
   },
   {
     "task_id": "2",
-    "task_description": "From the 'mug' search results, open the product page for 'Mug The best is yet to come' and verify the product page is displayed.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Search for 'mug' using the header search bar and press Enter.",
-      "In results, click the product named 'Mug The best is yet to come'.",
-      "Wait for the product page to load."
-    ],
-    "require_login": false,
+    "task_description": "Purchase 2 units of 'Hummingbird printed sweater' (size M, color White) with bank wire payment and return only the order reference number.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP__",
+    "steps": "15",
+    "require_login": true,
     "eval": {
-      "eval_type": ["dom_match"],
-      "dom_match": {
-        "url": "last",
-        "dom_extractor": "document.querySelector('h1') ? document.querySelector('h1').innerText : document.body.innerText",
+      "eval_type": ["string_match"],
+      "string_match": {
         "match_type": "contains",
-        "match_value": "Mug The best is yet to come",
-        "description": "The product page title should contain 'Mug The best is yet to come'."
+        "match_value": "UAOJTFVMP"
       }
     }
   },
   {
     "task_id": "3",
-    "task_description": "Add 'Mug The best is yet to come' to cart and verify the add-to-cart success message is displayed.",
-    "task_type": "operation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Search for 'mug' and open product 'Mug The best is yet to come'.",
-      "Click 'Add to cart'.",
-      "Wait for the add-to-cart modal to appear."
-    ],
+    "task_description": "Navigate to 'Art' category listing and filter products by price range $16.00 - $19.00, then return the number of filtered products.",
+    "task_type": "lookup",
+    "start_url": "__PRESTASHOP__",
+    "steps": "6",
     "require_login": false,
     "eval": {
-      "eval_type": ["dom_match"],
-      "dom_match": {
-        "url": "last",
-        "dom_extractor": "(document.querySelector('#blockcart-modal') && document.querySelector('#blockcart-modal').innerText) ? document.querySelector('#blockcart-modal').innerText : document.body.innerText",
-        "match_type": "contains",
-        "match_value": "Product successfully added to your shopping cart",
-        "description": "Add-to-cart confirmation should be visible."
+      "eval_type": ["string_match"],
+      "string_match": {
+        "match_type": "exact",
+        "match_value": "2"
       }
     }
   },
   {
     "task_id": "4",
-    "task_description": "From the add-to-cart modal, proceed to checkout and verify the Shopping Cart page is displayed.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Search for 'mug' and open product 'Mug The best is yet to come'.",
-      "Click 'Add to cart' and wait for the modal.",
-      "Click 'Proceed to checkout'.",
-      "Wait for the cart page to load."
-    ],
-    "require_login": false,
+    "task_description": "Add product 'The best is yet to come' framed poster to wishlist and verify it appears in the customer's wishlist page.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP__",
+    "steps": "7",
+    "require_login": true,
     "eval": {
-      "eval_type": ["url_match", "dom_match"],
-      "url_match": {
-        "match_type": "contains",
-        "match_value": "cart",
-        "description": "Cart page URL should contain 'cart'."
-      },
+      "eval_type": ["dom_match"],
       "dom_match": {
-        "url": "last",
-        "dom_extractor": "document.body.innerText",
-        "match_type": "contains",
-        "match_value": "Shopping Cart",
-        "description": "The Shopping Cart page text should be visible."
+        "url": "__PRESTASHOP__/module/blockwishlist/lists",
+        "dom_extractor": "[...document.querySelectorAll('.wishlist-list-item-title')].some(el => el.innerText.includes('The best is yet to come'))",
+        "match_type": "exact",
+        "match_value": true,
+        "description": "Check if 'The best is yet to come' poster exists in wishlist."
       }
     }
   },
   {
     "task_id": "5",
-    "task_description": "On the Shopping Cart page, increase the quantity of the cart item to 2 and verify the quantity value becomes '2'.",
+    "task_description": "Subscribe to the newsletter using email 'customer.demo@prestashop.com' and verify the success message is displayed.",
     "task_type": "operation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Add 'Mug The best is yet to come' to cart and go to the Shopping Cart page.",
-      "Increase quantity using the plus button (or edit quantity input) until it is 2.",
-      "Wait for cart to refresh."
-    ],
+    "start_url": "__PRESTASHOP__",
+    "steps": "3",
     "require_login": false,
     "eval": {
       "eval_type": ["dom_match"],
       "dom_match": {
         "url": "last",
-        "dom_extractor": "(() => { const el = document.querySelector('input.js-cart-line-product-quantity'); if (el && el.value) return el.value; const anyQty = document.querySelector('input[name=\"qty\"], input[name*=\"quantity\"], input[type=\"number\"]'); return anyQty && anyQty.value ? anyQty.value : ''; })()",
+        "dom_extractor": "document.querySelector('.alert-success')?.innerText",
         "match_type": "contains",
-        "match_value": "2",
-        "description": "Cart line quantity should be 2."
+        "match_value": "You have successfully subscribed to this newsletter.",
+        "description": "Verify newsletter subscription success message."
       }
     }
   },
   {
     "task_id": "6",
-    "task_description": "On the Shopping Cart page, decrease the quantity of the cart item back to 1 and verify the quantity value becomes '1'.",
+    "task_description": "Apply promo code 'PRESTASHOP20' to a cart containing 'Customizable mug' and return the final discounted total.",
     "task_type": "operation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Ensure there is 1 cart item in the Shopping Cart page.",
-      "Set quantity to 1 using minus button or quantity input.",
-      "Wait for cart to refresh."
-    ],
+    "start_url": "__PRESTASHOP__",
+    "steps": "8",
     "require_login": false,
     "eval": {
-      "eval_type": ["dom_match"],
-      "dom_match": {
-        "url": "last",
-        "dom_extractor": "(() => { const el = document.querySelector('input.js-cart-line-product-quantity'); if (el && el.value) return el.value; const anyQty = document.querySelector('input[name=\"qty\"], input[name*=\"quantity\"], input[type=\"number\"]'); return anyQty && anyQty.value ? anyQty.value : ''; })()",
+      "eval_type": ["string_match"],
+      "string_match": {
         "match_type": "contains",
-        "match_value": "1",
-        "description": "Cart line quantity should be 1."
+        "match_value": "$11.90"
       }
     }
   },
   {
     "task_id": "7",
-    "task_description": "Remove the product from the Shopping Cart and verify the empty-cart message 'There are no more items in your cart' is displayed.",
+    "task_description": "Place an order as a guest customer for 'Mountain fox notebook' using Check payment method and verify order confirmation page is reached.",
     "task_type": "operation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Add any product to cart and go to Shopping Cart page.",
-      "Click the delete/trash icon that removes the product line.",
-      "Wait for the cart to refresh and become empty."
-    ],
+    "start_url": "__PRESTASHOP__",
+    "steps": "18",
     "require_login": false,
     "eval": {
-      "eval_type": ["dom_match"],
+      "eval_type": ["url_match", "dom_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "order-confirmation"
+      },
       "dom_match": {
         "url": "last",
-        "dom_extractor": "document.body.innerText",
+        "dom_extractor": "document.querySelector('h3.h1')?.innerText",
         "match_type": "contains",
-        "match_value": "There are no more items in your cart",
-        "description": "Empty cart message should appear after deleting the last item."
+        "match_value": "Your order is confirmed",
+        "description": "Verify order confirmation heading."
       }
     }
   },
   {
     "task_id": "8",
-    "task_description": "Perform a search with less than 3 characters (e.g., 'ab') and verify that the search results page shows 'No matches were found for your search'.",
-    "task_type": "lookup",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Click the header search bar.",
-      "Type 'ab' and press Enter.",
-      "Wait for the search results page."
-    ],
-    "require_login": false,
+    "task_description": "Create a new product named 'Premium Coffee Mug' with reference 'DEMO_PCM', price $25.00, quantity 50, category 'Home Accessories', and enable it for online sale from the back office.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "20",
+    "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
       "dom_match": {
-        "url": "last",
-        "dom_extractor": "document.body.innerText",
+        "url": "__PRESTASHOP__/en/home-accessories/premium-coffee-mug.html",
+        "dom_extractor": "document.querySelector('.product-price')?.innerText",
         "match_type": "contains",
-        "match_value": "No matches were found for your search",
-        "description": "Short search query should yield the 'No matches' page title."
+        "match_value": "$25.00",
+        "description": "Verify the created product is visible on storefront with correct price."
       }
     }
   },
   {
     "task_id": "9",
-    "task_description": "Search with an empty query (press Enter in an empty search bar) and verify it shows 'No matches were found for your search'.",
-    "task_type": "lookup",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Click the header search bar.",
-      "Ensure it is empty.",
-      "Press Enter.",
-      "Wait for the search results page."
-    ],
-    "require_login": false,
+    "task_description": "Create a cart rule named '15% Off on Orders Over $50' with code 'SAVE15OVER50' that gives 15% discount for orders with minimum amount of $50.00.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "16",
+    "require_login": true,
     "eval": {
-      "eval_type": ["dom_match"],
+      "eval_type": ["string_match", "dom_match"],
+      "string_match": {
+        "match_type": "contains",
+        "match_value": "$42.50"
+      },
       "dom_match": {
         "url": "last",
-        "dom_extractor": "document.body.innerText",
-        "match_type": "contains",
-        "match_value": "No matches were found for your search",
-        "description": "Empty search should yield the 'No matches' page title."
+        "dom_extractor": "(document.querySelector('input[name=\"reduction_percent\"]')?.value === '15' && document.querySelector('input[name=\"minimum_amount\"]')?.value === '50') ? 1 : 0",
+        "match_type": "exact",
+        "match_value": 1,
+        "description": "Verify cart rule settings: 15% discount with $50 minimum."
       }
     }
   },
   {
     "task_id": "10",
-    "task_description": "Go to Footer > Products and click 'Prices drop', then verify you are on the Prices drop page.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Scroll to the footer.",
-      "In 'Products' block, click 'Prices drop'.",
-      "Wait for the page to load."
-    ],
-    "require_login": false,
+    "task_description": "Navigate to Orders page in back office and find order with reference 'XKBKNABJK', then return the customer's full name.",
+    "task_type": "lookup",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "5",
+    "require_login": true,
     "eval": {
-      "eval_type": ["url_match"],
-      "url_match": {
-        "match_type": "contains",
-        "match_value": "prices-drop",
-        "description": "Prices drop page should have 'prices-drop' in URL."
+      "eval_type": ["string_match"],
+      "string_match": {
+        "match_type": "exact",
+        "match_value": "John DOE"
       }
     }
   },
   {
     "task_id": "11",
-    "task_description": "Go to Footer > Products and click 'New products', then verify you are on the New products page.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Scroll to the footer.",
-      "In 'Products' block, click 'New products'.",
-      "Wait for the page to load."
-    ],
-    "require_login": false,
+    "task_description": "Change the order status of order #5 to 'Payment accepted' from the back office.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "8",
+    "require_login": true,
     "eval": {
-      "eval_type": ["url_match"],
-      "url_match": {
-        "match_type": "contains",
-        "match_value": "new-products",
-        "description": "New products page should have 'new-products' in URL."
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "__PRESTASHOP_ADMIN__/index.php?controller=AdminOrders&id_order=5&vieworder",
+        "dom_extractor": "document.querySelector('.badge.badge-success')?.innerText.trim()",
+        "match_type": "exact",
+        "match_value": "Payment accepted",
+        "description": "Verify order status changed to 'Payment accepted'."
       }
     }
   },
   {
     "task_id": "12",
-    "task_description": "Go to Footer > Products and click 'Best sales', then verify you are on the Best sellers page.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Scroll to the footer.",
-      "In 'Products' block, click 'Best sales'.",
-      "Wait for the page to load."
-    ],
-    "require_login": false,
+    "task_description": "Disable the product 'Customizable mug' from the back office and verify it shows 404 error on the storefront.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "9",
+    "require_login": true,
     "eval": {
-      "eval_type": ["url_match"],
-      "url_match": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "__PRESTASHOP__/en/home-accessories/9-customizable-mug.html",
+        "dom_extractor": "document.querySelector('h1')?.innerText",
         "match_type": "contains",
-        "match_value": "best-sales",
-        "description": "Best sales page should have 'best-sales' in URL."
+        "match_value": "The page you are looking for was not found",
+        "description": "Verify disabled product shows 404 page."
       }
     }
   },
   {
     "task_id": "13",
-    "task_description": "Go to Footer > Our company and click 'Delivery', then verify the Delivery CMS page is displayed.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Scroll to the footer.",
-      "In 'Our company' block, click 'Delivery'.",
-      "Wait for the page to load."
-    ],
-    "require_login": false,
+    "task_description": "Update the stock quantity of product 'Hummingbird cushion' to 200 units from the back office.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "10",
+    "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
       "dom_match": {
         "url": "last",
-        "dom_extractor": "document.querySelector('h1') ? document.querySelector('h1').innerText : document.body.innerText",
-        "match_type": "contains",
-        "match_value": "Delivery",
-        "description": "Delivery CMS page title should contain 'Delivery'."
+        "dom_extractor": "document.querySelector('input[name=\"qty_0\"]')?.value",
+        "match_type": "exact",
+        "match_value": "200",
+        "description": "Verify stock quantity updated to 200."
       }
     }
   },
   {
     "task_id": "14",
-    "task_description": "Go to Footer > Our company and click 'Terms and conditions of use', then verify the Terms page is displayed.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Scroll to the footer.",
-      "In 'Our company' block, click 'Terms and conditions of use'.",
-      "Wait for the page to load."
-    ],
-    "require_login": false,
+    "task_description": "Create a standard full refund for order #3 from the back office and verify the refund confirmation message appears.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "9",
+    "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
       "dom_match": {
         "url": "last",
-        "dom_extractor": "document.querySelector('h1') ? document.querySelector('h1').innerText : document.body.innerText",
+        "dom_extractor": "document.querySelector('.alert-success')?.innerText",
         "match_type": "contains",
-        "match_value": "Terms and conditions of use",
-        "description": "Terms page should show 'Terms and conditions of use' in the page title."
+        "match_value": "Credit slip has been successfully generated",
+        "description": "Verify refund success message."
       }
     }
   },
   {
     "task_id": "15",
-    "task_description": "Go to Footer > Our company and click 'Sitemap', then verify the Sitemap page is displayed.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Scroll to the footer.",
-      "In 'Our company' block, click 'Sitemap'.",
-      "Wait for the page to load."
-    ],
-    "require_login": false,
+    "task_description": "Add a new customer from back office with email 'testcustomer@example.com', first name 'Test', last name 'Customer', and enable the account.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "12",
+    "require_login": true,
     "eval": {
-      "eval_type": ["url_match"],
-      "url_match": {
-        "match_type": "contains",
-        "match_value": "sitemap",
-        "description": "Sitemap page should have 'sitemap' in URL."
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.querySelector('input[name=\"email\"]')?.value",
+        "match_type": "exact",
+        "match_value": "testcustomer@example.com",
+        "description": "Verify customer created with correct email."
       }
     }
   },
   {
     "task_id": "16",
-    "task_description": "Go to Footer > Our company and click 'Stores', then verify the Stores page is displayed.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Scroll to the footer.",
-      "In 'Our company' block, click 'Stores'.",
-      "Wait for the page to load."
-    ],
-    "require_login": false,
+    "task_description": "Edit the CMS page 'About us' and change the page title to 'About Our PrestaShop Store'.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "10",
+    "require_login": true,
     "eval": {
-      "eval_type": ["url_match"],
-      "url_match": {
-        "match_type": "contains",
-        "match_value": "stores",
-        "description": "Stores page should have 'stores' in URL."
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "__PRESTASHOP__/en/content/4-about-us",
+        "dom_extractor": "document.querySelector('h1')?.innerText",
+        "match_type": "exact",
+        "match_value": "About Our PrestaShop Store",
+        "description": "Verify CMS page title updated on storefront."
       }
     }
   },
   {
     "task_id": "17",
-    "task_description": "Click the header 'Contact us' link and verify the contact form page is displayed.",
-    "task_type": "navigation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Click the 'Contact us' link in the header.",
-      "Wait for the contact page to load."
-    ],
+    "task_description": "Sort products in 'Clothes' category by 'Price, low to high' and return the name of the cheapest product.",
+    "task_type": "lookup",
+    "start_url": "__PRESTASHOP__",
+    "steps": "4",
     "require_login": false,
     "eval": {
-      "eval_type": ["url_match"],
-      "url_match": {
-        "match_type": "contains",
-        "match_value": "contact-us",
-        "description": "Contact page URL should contain 'contact-us'."
+      "eval_type": ["string_match"],
+      "string_match": {
+        "match_type": "exact",
+        "match_value": "Hummingbird printed t-shirt"
       }
     }
   },
   {
     "task_id": "18",
-    "task_description": "Send a message from the Contact us page while logged out and verify the success message is displayed.",
-    "task_type": "form",
-    "start_url": "__FO_CONTACT__",
-    "steps": [
-      "Select a subject in the contact form (e.g., Customer service or Webmaster).",
-      "Fill Email address with a valid email (e.g., qa.test@example.com).",
-      "Fill Message with 'Hello from automated test'.",
-      "Click 'Send'.",
-      "Wait for confirmation message."
-    ],
+    "task_description": "Navigate to page 2 of the 'Clothes' category and return the total number of products displayed on that page.",
+    "task_type": "lookup",
+    "start_url": "__PRESTASHOP__",
+    "steps": "4",
     "require_login": false,
     "eval": {
-      "eval_type": ["dom_match"],
-      "dom_match": {
-        "url": "last",
-        "dom_extractor": "document.body.innerText",
-        "match_type": "contains",
-        "match_value": "Your message has been successfully sent to our team.",
-        "description": "A success confirmation should appear after sending contact message."
+      "eval_type": ["string_match"],
+      "string_match": {
+        "match_type": "exact",
+        "match_value": "2"
       }
     }
   },
   {
     "task_id": "19",
-    "task_description": "Create a new customer account from the login page and verify that you are logged in (Sign out appears).",
-    "task_type": "form",
-    "start_url": "__FO_LOGIN__",
-    "steps": [
-      "Click 'No account? Create one here'.",
-      "Fill the registration form (use a unique email like qa+<timestamp>@example.com).",
-      "Click 'Save'.",
-      "Wait for redirection to homepage."
-    ],
-    "require_login": false,
+    "task_description": "Create a new order from back office for customer 'John DOE' with product 'Mug The best is yet to come', quantity 3, using Bank wire payment method.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "17",
+    "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
       "dom_match": {
         "url": "last",
-        "dom_extractor": "document.body.innerText",
+        "dom_extractor": "document.querySelector('.alert-success')?.innerText",
         "match_type": "contains",
-        "match_value": "Sign out",
-        "description": "After creating account, the header/account area should include 'Sign out'."
+        "match_value": "The order has been successfully created.",
+        "description": "Verify order creation success message."
       }
     }
   },
   {
     "task_id": "20",
-    "task_description": "Log out from the customer account using the 'Sign out' link and verify the 'Log in to your account' page is displayed.",
+    "task_description": "Add a partial refund for 1 unit of 'Hummingbird printed t-shirt' (Size M, Color White) in order #7 and verify the credit slip is generated.",
     "task_type": "operation",
-    "start_url": "__FO_HOME__",
-    "steps": [
-      "Ensure you are logged in (if not, log in or create an account).",
-      "Click 'Sign out' in the header (or on the account page).",
-      "Wait for the login page to be displayed."
-    ],
+    "start_url": "__PRESTASHOP_ADMIN__",
+    "steps": "11",
+    "require_login": true,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "__PRESTASHOP_ADMIN__/index.php?controller=AdminOrders&id_order=7&vieworder",
+        "dom_extractor": "document.querySelector('#refundList tbody tr')?.innerText",
+        "match_type": "contains",
+        "match_value": "Hummingbird printed t-shirt",
+        "description": "Verify partial refund credit slip created for the product."
+      }
+    }
+  },
+  {
+    "task_id": "21",
+    "task_description": "Compare three products: 'Hummingbird printed t-shirt', 'Brown bear cushion', and 'The best is yet to come poster', then verify all three appear on the product comparison page.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP__",
+    "steps": "12",
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match", "dom_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "product-comparison"
+      },
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "(() => { const products = [...document.querySelectorAll('.product-title, .comparison-product-title')].map(el => el.innerText.toLowerCase()); return products.some(p => p.includes('hummingbird')) && products.some(p => p.includes('brown bear')) && products.some(p => p.includes('best is yet to come')) ? 1 : 0; })()",
+        "match_type": "exact",
+        "match_value": 1,
+        "description": "Verify all three products appear in comparison."
+      }
+    }
+  },
+  {
+    "task_id": "22",
+    "task_description": "Write a product review for 'Customizable mug' with 5 stars rating and title 'Excellent Quality Mug', then verify the review submission success message appears.",
+    "task_type": "operation",
+    "start_url": "__PRESTASHOP__",
+    "steps": "10",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -436,8 +381,56 @@
         "url": "last",
         "dom_extractor": "document.body.innerText",
         "match_type": "contains",
-        "match_value": "Log in to your account",
-        "description": "After logout, the login page should be shown."
+        "match_value": "Your review has been submitted and will be available once approved by a moderator.",
+        "description": "Verify review submission success message."
+      }
+    }
+  },
+  {
+    "task_id": "23",
+    "task_description": "Navigate to customer account, go to Order history and details, open the most recent order, and return the order reference number.",
+    "task_type": "lookup",
+    "start_url": "__PRESTASHOP__",
+    "steps": "6",
+    "require_login": true,
+    "eval": {
+      "eval_type": ["string_match"],
+      "string_match": {
+        "match_type": "contains",
+        "match_value": "UAOJTFVMP"
+      }
+    }
+  },
+  {
+    "task_id": "24",
+    "task_description": "Add a new address in customer account with label 'Office Address', address '456 Business Ave', city 'Los Angeles', state 'California', postal code '90001', country 'United States', and phone '555-1234567'.",
+    "task_type": "form",
+    "start_url": "__PRESTASHOP__",
+    "steps": "14",
+    "require_login": true,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "__PRESTASHOP__/en/addresses",
+        "dom_extractor": "(() => { const addresses = document.body.innerText; return addresses.includes('Office Address') && addresses.includes('456 Business Ave') && addresses.includes('Los Angeles') ? 1 : 0; })()",
+        "match_type": "exact",
+        "match_value": 1,
+        "description": "Verify new address appears in addresses list."
+      }
+    }
+  },
+  {
+    "task_id": "25",
+    "task_description": "Search for 'notebook', filter results by category 'Stationery', sort by 'Price, high to low', and return the name of the most expensive notebook in that filtered view.",
+    "task_type": "lookup",
+    "start_url": "__PRESTASHOP__",
+    "steps": "8",
+    "require_login": false,
+    "eval": {
+      "eval_type": ["string_match"],
+      "string_match": {
+        "match_type": "exact",
+        "match_value": "Mountain fox notebook"
       }
     }
   }
