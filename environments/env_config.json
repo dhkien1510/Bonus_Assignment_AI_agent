@@ -1,0 +1,12 @@
+{
+  "__PRESTASHOP__": {
+    "url": "http://localhost:8001",
+    "username": "demo@prestashop.com",
+    "password": "Correct Horse Battery Staple"
+  },
+  "__PRESTASHOP_ADMIN__": {
+    "url": "http://localhost:8001/admin-dev",
+    "username": "hongkien15aa@gmail.com",
+    "password": "123kien123"
+  }
+}
