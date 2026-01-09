@@ -1,0 +1,444 @@
+[
+  {
+    "task_id": "1",
+    "task_description": "Search for 'mug' from the header search bar and verify that search results contain the product 'Mug The Best is yet to come'.",
+    "task_type": "lookup",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Click the header search input.",
+      "Type 'mug' and press Enter.",
+      "Wait for the search results page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match", "dom_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "search",
+        "description": "Ensure navigation to a search results page."
+      },
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Mug The best is yet to come",
+        "description": "Search results should mention the demo product 'Mug The best is yet to come'."
+      }
+    }
+  },
+  {
+    "task_id": "2",
+    "task_description": "From the 'mug' search results, open the product page for 'Mug The best is yet to come' and verify the product page is displayed.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Search for 'mug' using the header search bar and press Enter.",
+      "In results, click the product named 'Mug The best is yet to come'.",
+      "Wait for the product page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.querySelector('h1') ? document.querySelector('h1').innerText : document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Mug The best is yet to come",
+        "description": "The product page title should contain 'Mug The best is yet to come'."
+      }
+    }
+  },
+  {
+    "task_id": "3",
+    "task_description": "Add 'Mug The best is yet to come' to cart and verify the add-to-cart success message is displayed.",
+    "task_type": "operation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Search for 'mug' and open product 'Mug The best is yet to come'.",
+      "Click 'Add to cart'.",
+      "Wait for the add-to-cart modal to appear."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "(document.querySelector('#blockcart-modal') && document.querySelector('#blockcart-modal').innerText) ? document.querySelector('#blockcart-modal').innerText : document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Product successfully added to your shopping cart",
+        "description": "Add-to-cart confirmation should be visible."
+      }
+    }
+  },
+  {
+    "task_id": "4",
+    "task_description": "From the add-to-cart modal, proceed to checkout and verify the Shopping Cart page is displayed.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Search for 'mug' and open product 'Mug The best is yet to come'.",
+      "Click 'Add to cart' and wait for the modal.",
+      "Click 'Proceed to checkout'.",
+      "Wait for the cart page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match", "dom_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "cart",
+        "description": "Cart page URL should contain 'cart'."
+      },
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Shopping Cart",
+        "description": "The Shopping Cart page text should be visible."
+      }
+    }
+  },
+  {
+    "task_id": "5",
+    "task_description": "On the Shopping Cart page, increase the quantity of the cart item to 2 and verify the quantity value becomes '2'.",
+    "task_type": "operation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Add 'Mug The best is yet to come' to cart and go to the Shopping Cart page.",
+      "Increase quantity using the plus button (or edit quantity input) until it is 2.",
+      "Wait for cart to refresh."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "(() => { const el = document.querySelector('input.js-cart-line-product-quantity'); if (el && el.value) return el.value; const anyQty = document.querySelector('input[name=\"qty\"], input[name*=\"quantity\"], input[type=\"number\"]'); return anyQty && anyQty.value ? anyQty.value : ''; })()",
+        "match_type": "contains",
+        "match_value": "2",
+        "description": "Cart line quantity should be 2."
+      }
+    }
+  },
+  {
+    "task_id": "6",
+    "task_description": "On the Shopping Cart page, decrease the quantity of the cart item back to 1 and verify the quantity value becomes '1'.",
+    "task_type": "operation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Ensure there is 1 cart item in the Shopping Cart page.",
+      "Set quantity to 1 using minus button or quantity input.",
+      "Wait for cart to refresh."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "(() => { const el = document.querySelector('input.js-cart-line-product-quantity'); if (el && el.value) return el.value; const anyQty = document.querySelector('input[name=\"qty\"], input[name*=\"quantity\"], input[type=\"number\"]'); return anyQty && anyQty.value ? anyQty.value : ''; })()",
+        "match_type": "contains",
+        "match_value": "1",
+        "description": "Cart line quantity should be 1."
+      }
+    }
+  },
+  {
+    "task_id": "7",
+    "task_description": "Remove the product from the Shopping Cart and verify the empty-cart message 'There are no more items in your cart' is displayed.",
+    "task_type": "operation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Add any product to cart and go to Shopping Cart page.",
+      "Click the delete/trash icon that removes the product line.",
+      "Wait for the cart to refresh and become empty."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "There are no more items in your cart",
+        "description": "Empty cart message should appear after deleting the last item."
+      }
+    }
+  },
+  {
+    "task_id": "8",
+    "task_description": "Perform a search with less than 3 characters (e.g., 'ab') and verify that the search results page shows 'No matches were found for your search'.",
+    "task_type": "lookup",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Click the header search bar.",
+      "Type 'ab' and press Enter.",
+      "Wait for the search results page."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "No matches were found for your search",
+        "description": "Short search query should yield the 'No matches' page title."
+      }
+    }
+  },
+  {
+    "task_id": "9",
+    "task_description": "Search with an empty query (press Enter in an empty search bar) and verify it shows 'No matches were found for your search'.",
+    "task_type": "lookup",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Click the header search bar.",
+      "Ensure it is empty.",
+      "Press Enter.",
+      "Wait for the search results page."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "No matches were found for your search",
+        "description": "Empty search should yield the 'No matches' page title."
+      }
+    }
+  },
+  {
+    "task_id": "10",
+    "task_description": "Go to Footer > Products and click 'Prices drop', then verify you are on the Prices drop page.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Scroll to the footer.",
+      "In 'Products' block, click 'Prices drop'.",
+      "Wait for the page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "prices-drop",
+        "description": "Prices drop page should have 'prices-drop' in URL."
+      }
+    }
+  },
+  {
+    "task_id": "11",
+    "task_description": "Go to Footer > Products and click 'New products', then verify you are on the New products page.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Scroll to the footer.",
+      "In 'Products' block, click 'New products'.",
+      "Wait for the page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "new-products",
+        "description": "New products page should have 'new-products' in URL."
+      }
+    }
+  },
+  {
+    "task_id": "12",
+    "task_description": "Go to Footer > Products and click 'Best sales', then verify you are on the Best sellers page.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Scroll to the footer.",
+      "In 'Products' block, click 'Best sales'.",
+      "Wait for the page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "best-sales",
+        "description": "Best sales page should have 'best-sales' in URL."
+      }
+    }
+  },
+  {
+    "task_id": "13",
+    "task_description": "Go to Footer > Our company and click 'Delivery', then verify the Delivery CMS page is displayed.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Scroll to the footer.",
+      "In 'Our company' block, click 'Delivery'.",
+      "Wait for the page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.querySelector('h1') ? document.querySelector('h1').innerText : document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Delivery",
+        "description": "Delivery CMS page title should contain 'Delivery'."
+      }
+    }
+  },
+  {
+    "task_id": "14",
+    "task_description": "Go to Footer > Our company and click 'Terms and conditions of use', then verify the Terms page is displayed.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Scroll to the footer.",
+      "In 'Our company' block, click 'Terms and conditions of use'.",
+      "Wait for the page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.querySelector('h1') ? document.querySelector('h1').innerText : document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Terms and conditions of use",
+        "description": "Terms page should show 'Terms and conditions of use' in the page title."
+      }
+    }
+  },
+  {
+    "task_id": "15",
+    "task_description": "Go to Footer > Our company and click 'Sitemap', then verify the Sitemap page is displayed.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Scroll to the footer.",
+      "In 'Our company' block, click 'Sitemap'.",
+      "Wait for the page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "sitemap",
+        "description": "Sitemap page should have 'sitemap' in URL."
+      }
+    }
+  },
+  {
+    "task_id": "16",
+    "task_description": "Go to Footer > Our company and click 'Stores', then verify the Stores page is displayed.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Scroll to the footer.",
+      "In 'Our company' block, click 'Stores'.",
+      "Wait for the page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "stores",
+        "description": "Stores page should have 'stores' in URL."
+      }
+    }
+  },
+  {
+    "task_id": "17",
+    "task_description": "Click the header 'Contact us' link and verify the contact form page is displayed.",
+    "task_type": "navigation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Click the 'Contact us' link in the header.",
+      "Wait for the contact page to load."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["url_match"],
+      "url_match": {
+        "match_type": "contains",
+        "match_value": "contact-us",
+        "description": "Contact page URL should contain 'contact-us'."
+      }
+    }
+  },
+  {
+    "task_id": "18",
+    "task_description": "Send a message from the Contact us page while logged out and verify the success message is displayed.",
+    "task_type": "form",
+    "start_url": "__FO_CONTACT__",
+    "steps": [
+      "Select a subject in the contact form (e.g., Customer service or Webmaster).",
+      "Fill Email address with a valid email (e.g., qa.test@example.com).",
+      "Fill Message with 'Hello from automated test'.",
+      "Click 'Send'.",
+      "Wait for confirmation message."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Your message has been successfully sent to our team.",
+        "description": "A success confirmation should appear after sending contact message."
+      }
+    }
+  },
+  {
+    "task_id": "19",
+    "task_description": "Create a new customer account from the login page and verify that you are logged in (Sign out appears).",
+    "task_type": "form",
+    "start_url": "__FO_LOGIN__",
+    "steps": [
+      "Click 'No account? Create one here'.",
+      "Fill the registration form (use a unique email like qa+<timestamp>@example.com).",
+      "Click 'Save'.",
+      "Wait for redirection to homepage."
+    ],
+    "require_login": false,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Sign out",
+        "description": "After creating account, the header/account area should include 'Sign out'."
+      }
+    }
+  },
+  {
+    "task_id": "20",
+    "task_description": "Log out from the customer account using the 'Sign out' link and verify the 'Log in to your account' page is displayed.",
+    "task_type": "operation",
+    "start_url": "__FO_HOME__",
+    "steps": [
+      "Ensure you are logged in (if not, log in or create an account).",
+      "Click 'Sign out' in the header (or on the account page).",
+      "Wait for the login page to be displayed."
+    ],
+    "require_login": true,
+    "eval": {
+      "eval_type": ["dom_match"],
+      "dom_match": {
+        "url": "last",
+        "dom_extractor": "document.body.innerText",
+        "match_type": "contains",
+        "match_value": "Log in to your account",
+        "description": "After logout, the login page should be shown."
+      }
+    }
+  }
+]
