@@ -1,71 +1,64 @@
-volumes:
-  db-data:
-
 services:
-  mysql:
+  prestashop_mysql:
+    # TODO: Thay bằng image của bạn sau khi push lên Docker Hub
+    # image: yourdockerhub/prestashop_mysql:v1
     image: mysql:8.4
-    ports:
-      - "3306:3306"
-    volumes:
-      - db-data:/var/lib/mysql
+    container_name: prestashop_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWD:-prestashop}
-      MYSQL_DATABASE: ${DB_NAME:-prestashop}
-    restart: unless-stopped
+      MYSQL_ROOT_PASSWORD: prestashop
+      MYSQL_DATABASE: prestashop
+      MYSQL_USER: prestashop
+      MYSQL_PASSWORD: prestashop
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pprestashop"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
-      - prestashop-network
+      - prestashop_network
 
-  prestashop-git:
-    hostname: ${PS_HOSTNAME:-localhost}
-    build:
-      dockerfile: .docker/Dockerfile
-      context: .
-      args:
-        - VERSION=${VERSION:-8.1-apache}
-        - USER_ID=${USER_ID:-1000}
-        - GROUP_ID=${GROUP_ID:-1000}
-        - NODE_VERSION=${NODE_VERSION:-20.19.5}
-        - INSTALL_XDEBUG=${INSTALL_XDEBUG:-false}
-    environment:
-      DISABLE_MAKE: ${DISABLE_MAKE:-0}
-      PS_INSTALL_AUTO: ${PS_INSTALL_AUTO:-1}
-      DB_PASSWD: ${DB_PASSWD:-prestashop}
-      DB_NAME: ${DB_NAME:-prestashop}
-      DB_SERVER: ${DB_SERVER:-mysql}
-      DB_PREFIX: ${DB_PREFIX:-ps_}
-      PS_DOMAIN: ${PS_DOMAIN:-localhost:8001}
-      PS_FOLDER_INSTALL: ${PS_FOLDER_INSTALL:-install-dev}
-      PS_FOLDER_ADMIN: ${PS_FOLDER_ADMIN:-admin-dev}
-      PS_COUNTRY: ${PS_COUNTRY:-fr}
-      PS_LANGUAGE: ${PS_LANGUAGE:-en}
-      PS_DEV_MODE: ${PS_DEV_MODE:-1}
-      PS_ENABLE_SSL: ${PS_ENABLE_SSL:-0}
-      PS_ERASE_DB: ${PS_ERASE_DB:-0}
-      PS_USE_DOCKER_MAILDEV: ${PS_USE_DOCKER_MAILDEV:-1}
-      ADMIN_MAIL: ${ADMIN_MAIL:-demo@prestashop.com}
-      ADMIN_PASSWD: ${ADMIN_PASSWD:-Correct Horse Battery Staple}
-      BLACKFIRE_ENABLE: ${BLACKFIRE_ENABLE:-0}
-      BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID:-0}
-      BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN:-0}
-    command: /tmp/wait-for-it.sh --timeout=60 --strict mysql:3306 -- /tmp/docker_run_git.sh
+  prestashop_app:
+    # TODO: Thay bằng image của bạn sau khi push lên Docker Hub
+    # image: yourdockerhub/prestashop_app:v1
+    image: prestashop/prestashop:8-apache
+    container_name: prestashop_app
+    depends_on:
+      prestashop_mysql:
+        condition: service_healthy
     ports:
       - "8001:80"
-      - "8002:443"
-    depends_on:
-      - mysql
-    volumes:
-      - ./:/var/www/html
+    environment:
+      - DB_SERVER=prestashop_mysql
+      - DB_NAME=prestashop
+      - DB_USER=prestashop
+      - DB_PASSWD=prestashop
+      - PS_DOMAIN=localhost:8001
+      - PS_FOLDER_ADMIN=admin-dev
+      - PS_INSTALL_AUTO=0
+      - PS_ERASE_DB=0
+      - ADMIN_MAIL=demo@prestashop.com
+      - ADMIN_PASSWD=Correct Horse Battery Staple
+      - PS_COUNTRY=us
+      - PS_LANGUAGE=en
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost/ > /dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
     networks:
-      - prestashop-network
+      - prestashop_network
 
   maildev:
-    image: 'maildev/maildev'
+    image: maildev/maildev
+    container_name: prestashop_maildev
     ports:
-      - "1080:1080"
       - "1025:1025"
+      - "1081:1080"
     networks:
-      - prestashop-network
+      - prestashop_network
 
 networks:
-  prestashop-network:
-    name: prestashop-network
+  prestashop_network:
+    driver: bridge
