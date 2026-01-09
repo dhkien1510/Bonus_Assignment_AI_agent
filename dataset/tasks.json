@@ -4,7 +4,7 @@
     "task_description": "Navigate to the 'Clothes > Women' category and return only the name of the first product displayed by default position.",
     "task_type": "lookup",
     "start_url": "__PRESTASHOP__",
-    "steps": "3",
+    "steps": "10",
     "require_login": false,
     "eval": {
       "eval_type": ["string_match"],
@@ -19,7 +19,7 @@
     "task_description": "Purchase 2 units of 'Hummingbird printed sweater' (size M, color White) with bank wire payment and verify order confirmation page is reached.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP__",
-    "steps": "15",
+    "steps": "30",
     "require_login": true,
     "eval": {
       "eval_type": ["url_match", "dom_match"],
@@ -42,7 +42,7 @@
     "task_description": "Navigate to 'Accessories > Stationery' category, apply price filter, and verify filtered products are displayed.",
     "task_type": "lookup",
     "start_url": "__PRESTASHOP__",
-    "steps": "6",
+    "steps": "15",
     "require_login": false,
     "eval": {
       "eval_type": ["url_match", "dom_match"],
@@ -65,7 +65,7 @@
     "task_description": "Add product 'The best is yet to come' framed poster to wishlist and verify it appears in the customer's wishlist page.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP__",
-    "steps": "7",
+    "steps": "20",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -83,7 +83,7 @@
     "task_description": "Subscribe to the newsletter using a unique email and verify the confirmation message is displayed (success or already subscribed).",
     "task_type": "operation",
     "start_url": "__PRESTASHOP__",
-    "steps": "3",
+    "steps": "10",
     "require_login": false,
     "eval": {
       "eval_type": ["dom_match"],
@@ -101,7 +101,7 @@
     "task_description": "Apply promo code '20OFF' to a cart containing 'Customizable mug' and verify the discount is applied successfully.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP__",
-    "steps": "8",
+    "steps": "20",
     "require_login": false,
     "eval": {
       "eval_type": ["dom_match"],
@@ -119,7 +119,7 @@
     "task_description": "Place an order as a guest customer for 'Mountain fox notebook' using Check payment method and verify order confirmation page is reached.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP__",
-    "steps": "18",
+    "steps": "35",
     "require_login": false,
     "eval": {
       "eval_type": ["url_match", "dom_match"],
@@ -141,7 +141,7 @@
     "task_description": "Create a new product named 'Premium Coffee Mug' with reference 'DEMO_PCM', price $25.00, quantity 50, category 'Home Accessories', and enable it for online sale from the back office.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "20",
+    "steps": "40",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -159,7 +159,7 @@
     "task_description": "Create a cart rule named '15% Off on Orders Over $50' with code 'SAVE15OVER50' that gives 15% discount for orders with minimum amount of $50.00.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "16",
+    "steps": "35",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -177,7 +177,7 @@
     "task_description": "Navigate to Orders page in back office, open any order, and verify you can view the order details page with customer information.",
     "task_type": "lookup",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "5",
+    "steps": "15",
     "require_login": true,
     "eval": {
       "eval_type": ["url_match", "dom_match"],
@@ -200,7 +200,7 @@
     "task_description": "Navigate to Orders page in back office, select any order with 'Awaiting bank wire payment' status, and change its status to 'Payment accepted'.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "8",
+    "steps": "20",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -218,7 +218,7 @@
     "task_description": "Disable the product 'Customizable mug' from the back office and verify it shows 404 error on the storefront.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "9",
+    "steps": "25",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -236,7 +236,7 @@
     "task_description": "Update the stock quantity of product 'Hummingbird cushion' to 200 units from the back office.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "10",
+    "steps": "25",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -254,7 +254,7 @@
     "task_description": "Navigate to Orders page in back office, select any completed order, create a standard full refund and verify the refund confirmation message appears.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "9",
+    "steps": "25",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -272,7 +272,7 @@
     "task_description": "Add a new customer from back office with email 'testcustomer@example.com', first name 'Test', last name 'Customer', and enable the account.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "12",
+    "steps": "30",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -290,7 +290,7 @@
     "task_description": "Edit the CMS page 'About us' and change the page title to 'About Our PrestaShop Store'.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "10",
+    "steps": "25",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -308,7 +308,7 @@
     "task_description": "Sort products in 'Clothes' category by 'Price, low to high' and return the name of the cheapest product.",
     "task_type": "lookup",
     "start_url": "__PRESTASHOP__",
-    "steps": "4",
+    "steps": "12",
     "require_login": false,
     "eval": {
       "eval_type": ["string_match"],
@@ -323,7 +323,7 @@
     "task_description": "Navigate to page 2 of the 'Clothes' category and return the total number of products displayed on that page.",
     "task_type": "lookup",
     "start_url": "__PRESTASHOP__",
-    "steps": "4",
+    "steps": "12",
     "require_login": false,
     "eval": {
       "eval_type": ["string_match"],
@@ -338,7 +338,7 @@
     "task_description": "Create a new order from back office for customer 'John DOE' with product 'Mug The best is yet to come', quantity 3, using Bank wire payment method.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "17",
+    "steps": "40",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -356,7 +356,7 @@
     "task_description": "Navigate to Orders page in back office, select any order containing multiple items, create a partial refund for one product, and verify the credit slip is generated.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP_ADMIN__",
-    "steps": "11",
+    "steps": "30",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -374,7 +374,7 @@
     "task_description": "Compare three products: 'Hummingbird printed t-shirt', 'Brown bear cushion', and 'The best is yet to come poster', then verify all three appear on the product comparison page.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP__",
-    "steps": "12",
+    "steps": "25",
     "require_login": false,
     "eval": {
       "eval_type": ["url_match", "dom_match"],
@@ -396,7 +396,7 @@
     "task_description": "Write a product review for 'Customizable mug' with 5 stars rating and title 'Excellent Quality Mug', then verify the review submission success message appears.",
     "task_type": "operation",
     "start_url": "__PRESTASHOP__",
-    "steps": "10",
+    "steps": "25",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -414,7 +414,7 @@
     "task_description": "Navigate to customer account, go to Order history and details, open the most recent order, and verify order details page is displayed.",
     "task_type": "lookup",
     "start_url": "__PRESTASHOP__",
-    "steps": "6",
+    "steps": "15",
     "require_login": true,
     "eval": {
       "eval_type": ["url_match", "dom_match"],
@@ -437,7 +437,7 @@
     "task_description": "Add a new address in customer account with label 'Office Address', address '456 Business Ave', city 'Los Angeles', state 'California', postal code '90001', country 'United States', and phone '555-1234567'.",
     "task_type": "form",
     "start_url": "__PRESTASHOP__",
-    "steps": "14",
+    "steps": "30",
     "require_login": true,
     "eval": {
       "eval_type": ["dom_match"],
@@ -455,7 +455,7 @@
     "task_description": "Search for 'notebook', filter results by category 'Stationery', sort by 'Price, high to low', and return the name of the most expensive notebook in that filtered view.",
     "task_type": "lookup",
     "start_url": "__PRESTASHOP__",
-    "steps": "8",
+    "steps": "20",
     "require_login": false,
     "eval": {
       "eval_type": ["string_match"],
