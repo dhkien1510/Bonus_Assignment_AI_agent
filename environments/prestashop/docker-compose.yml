@@ -1,6 +1,5 @@
 services:
   prestashop_mysql:
-    # MySQL 8.4 official image from Docker Hub
     image: mysql:8.4
     container_name: prestashop_mysql
     environment:
@@ -18,8 +17,6 @@ services:
       - prestashop_network
 
   prestashop_app:
-    # Use base image with auto-config (connects to prestashop_mysql automatically)
-    # Custom app image can cause hostname issues with database connection
     image: prestashop/prestashop:8-apache
     container_name: prestashop_app
     depends_on:
