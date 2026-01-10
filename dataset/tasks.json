@@ -1,7 +1,7 @@
 [
     {
         "task_id": "1",
-        "task_description": "Navigate to the 'Clothes > Women' category and return only the name of the first product displayed by default position.",
+        "task_description": "Navigate to the 'Clothes > men' category and return only the name of the first product displayed by default position.",
         "task_type": "lookup",
         "start_url": "__PRESTASHOP__",
         "steps": "10",
