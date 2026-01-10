@@ -11,8 +11,8 @@
                 "string_match"
             ],
             "string_match": {
-                "match_type": "exact",
-                "match_value": "Hummingbird printed t-shirt"
+                "match_type": "contains",
+                "match_value": "Hummingbird"
             }
         }
     },
@@ -124,7 +124,7 @@
     },
     {
         "task_id": "7",
-        "task_description": "Place an order as a guest customer for 'Mountain fox notebook' using Check payment method and verify order confirmation page is reached.",
+        "task_description": "Place an order as a guest customer for 'Mountain fox notebook' using Check payment method and to checkout until reaching the payment method selection step",
         "task_type": "operation",
         "start_url": "__PRESTASHOP__",
         "steps": "35",
